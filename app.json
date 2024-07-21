@@ -22,6 +22,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "ebf4f06c-7d40-4bcb-8b99-415f15c1294f"
+      }
+    },
+    "owner": "gaws"
   }
 }
