@@ -1,14 +1,16 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import "./utils/gesture-handler";
+import { StatusBar, StyleSheet } from "react-native";
 import { PaperProvider } from "react-native-paper";
+import StackNavigator from "./src/navigation/StackNavigator";
+import { AuthProvider } from "./src/contexts/authContext";
 
 export default function App() {
   return (
     <PaperProvider>
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
+      <AuthProvider>
+        <StackNavigator />
         <StatusBar style="auto" />
-      </View>
+      </AuthProvider>
     </PaperProvider>
   );
 }
