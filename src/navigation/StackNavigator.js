@@ -1,6 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import Home from "../components/Home";
 import Profile from "../components/Profile";
+import Login from "../components/Login";
 import { NavigationContainer } from "@react-navigation/native";
 import { LogBox, StyleSheet } from "react-native";
 import Logo from "../components/logo/Logo";
@@ -10,11 +11,12 @@ export default function StackNavigator() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Home"
+        initialRouteName="Login"
         screenOptions={{
-          headerStyle: { backgroundColor: "#525354" },
+          headerStyle: { backgroundColor: "#8200ee" },
           headerTintColor: "white",
           headerTitleStyle: { fontWeight: "bold" },
+          headerTitleAlign: "center",
         }}
       >
         <Stack.Screen
@@ -34,6 +36,7 @@ export default function StackNavigator() {
           component={Home}
         />
         <Stack.Screen name="Profile" component={Profile} />
+        <Stack.Screen name="Login" component={Login} />
       </Stack.Navigator>
     </NavigationContainer>
   );
