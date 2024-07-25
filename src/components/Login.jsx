@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, View, Dimensions, Platform } from "react-native";
 import { Button, Text, TextInput } from "react-native-paper";
+import { loginAsync } from "../actions/authActions";
 
 const { width, height } = Dimensions.get("window");
 
 function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  async function handleLogin() {
+    const response = await loginAsync(email, password);
+    console.log(response);
+  }
   return (
     <View style={styles.container}>
       <Text
