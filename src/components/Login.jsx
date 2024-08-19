@@ -1,16 +1,19 @@
-import React, { useState } from "react";
 import { StyleSheet, View, Dimensions, Platform } from "react-native";
 import { Button, Text, TextInput } from "react-native-paper";
-import { loginAsync } from "../actions/authActions";
+import { useAuth } from "../contexts/authContext";
+import { useNavigation } from "@react-navigation/native";
 
 const { width, height } = Dimensions.get("window");
 
 function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { email, password, isLoading, dispatch, loginAsync, getUserDataAsync } =
+    useAuth();
+  const navigation = useNavigation();
   async function handleLogin() {
     const response = await loginAsync(email, password);
-    console.log(response);
+    if (response) {
+      navigation.navigate("Profile");
+    }
   }
   return (
     <View style={styles.container}>
@@ -23,18 +26,22 @@ function Login() {
       </Text>
       <TextInput
         label="Email"
+        value={email}
         style={styles.input}
         mode="outlined"
         keyboardType="email-address"
         autoCapitalize="none"
+        onChangeText={(text) => dispatch({ type: "email", payload: text })}
       />
       <TextInput
         label="Password"
         style={styles.input}
         mode="outlined"
         secureTextEntry
+        value={password}
+        onChangeText={(text) => dispatch({ type: "password", payload: text })}
       />
-      <Button mode="contained" style={styles.button}>
+      <Button mode="contained" style={styles.button} onPress={handleLogin}>
         Login
       </Button>
     </View>
