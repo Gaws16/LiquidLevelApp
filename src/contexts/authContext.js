@@ -2,12 +2,13 @@ import { createContext, useContext, useReducer } from "react";
 import { axios } from "../api/axiosInstance";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 const AuthContext = createContext();
-initialState = {
+const initialState = {
   isLoggedIn: false,
   user: {},
   isLoading: false,
   email: "",
   password: "",
+  sensors: [],
 };
 function reducer(state, action) {
   switch (action.type) {
@@ -42,13 +43,18 @@ function reducer(state, action) {
       };
     case "user":
       return { ...state, user: action.payload };
+    case "sensors/loaded":
+      return {
+        ...state,
+        sensors: action.payload,
+      };
 
     default:
       return state;
   }
 }
 export const AuthProvider = ({ children }) => {
-  const [{ isLoggedIn, user, isLoading, email, password }, dispatch] =
+  const [{ isLoggedIn, user, isLoading, email, password, sensors }, dispatch] =
     useReducer(reducer, initialState);
   async function loginAsync(email, password) {
     dispatch({ type: "loading" });
@@ -80,6 +86,16 @@ export const AuthProvider = ({ children }) => {
       console.log("Error getting data from AsyncStorage: " + error);
     }
   }
+  async function getSensorsAsync(userId) {
+    try {
+      dispatch({ type: "loading" });
+      const response = await axios.get("/sensors/" + userId);
+      dispatch({ type: "sensors/loaded", payload: response.data });
+      return response.data;
+    } catch (error) {
+      console.log("Error getting sensors from API: ");
+    }
+  }
   return (
     <AuthContext.Provider
       value={{
@@ -91,6 +107,8 @@ export const AuthProvider = ({ children }) => {
         dispatch,
         loginAsync,
         getUserDataAsync,
+        sensors,
+        getSensorsAsync,
       }}
     >
       {children}
