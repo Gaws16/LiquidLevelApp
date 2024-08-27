@@ -3,11 +3,10 @@ import { Button, Text, TextInput } from "react-native-paper";
 import { useAuth } from "../contexts/authContext";
 import { useNavigation } from "@react-navigation/native";
 
-const { width, height } = Dimensions.get("window");
+const { width } = Dimensions.get("window");
 
 function Login() {
-  const { email, password, isLoading, dispatch, loginAsync, getUserDataAsync } =
-    useAuth();
+  const { email, password, isLoading, dispatch, loginAsync } = useAuth();
   const navigation = useNavigation();
   async function handleLogin() {
     const response = await loginAsync(email, password);

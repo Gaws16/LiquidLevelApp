@@ -1,7 +1,6 @@
 import { StyleSheet, View } from "react-native";
 import { Button, Text } from "react-native-paper";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { NavigationContainer } from "@react-navigation/native";
+
 function Home({ navigation }) {
   return (
     <View style={styles.container}>
