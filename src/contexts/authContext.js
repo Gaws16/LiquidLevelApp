@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useCallback, useContext, useReducer } from "react";
 import { axios } from "../api/axiosInstance";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 const AuthContext = createContext();
@@ -86,7 +86,7 @@ export const AuthProvider = ({ children }) => {
       console.log("Error getting data from AsyncStorage: " + error);
     }
   }
-  async function getSensorsAsync(userId) {
+  const getSensorsAsync = useCallback(async function getSensorsAsync(userId) {
     try {
       dispatch({ type: "loading" });
       const response = await axios.get("/sensors/" + userId);
@@ -95,7 +95,7 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       console.log("Error getting sensors from API: ");
     }
-  }
+  }, []);
   return (
     <AuthContext.Provider
       value={{

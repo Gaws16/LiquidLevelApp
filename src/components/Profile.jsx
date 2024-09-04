@@ -6,7 +6,14 @@ import { useEffect } from "react";
 
 function Profile({ navigation }) {
   const { getSensorsAsync, user, sensors } = useAuth();
-
+  const { userId } = user;
+  useEffect(() => {
+    if (!userId) return;
+    async function fetchSensorsAsync() {
+      await getSensorsAsync(userId);
+    }
+    fetchSensorsAsync();
+  }, [userId, getSensorsAsync]);
   async function handleSensors(userId) {
     await getSensorsAsync(userId);
   }
